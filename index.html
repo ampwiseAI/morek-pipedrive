@@ -751,36 +751,180 @@
   .pd-link.gold { background: var(--gold); color: var(--blue-deep); }
   .pd-link.gold:hover { background: var(--gold-deep); color: white; }
 
-  /* Mobile fallback */
+  /* Yellow highlight sweep on important body text when slide loads */
+  @keyframes hlSweep {
+    0% { background-size: 0% 100%; }
+    100% { background-size: 100% 100%; }
+  }
+  .slide.active p strong,
+  .slide.active li strong,
+  .slide.active .copy strong,
+  .slide.active .task-sub strong,
+  .slide.active .lede strong,
+  .slide.active .day-block .body p strong,
+  .slide.active .reason p strong,
+  .slide.active .ba-card strong,
+  .slide.active .check-item strong {
+    background: linear-gradient(120deg, var(--gold-soft) 0%, var(--gold-soft) 100%);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 1px 4px;
+    border-radius: 3px;
+    animation: hlSweep 1.2s cubic-bezier(0.5,1,0.5,1) 0.7s forwards;
+  }
+  /* Don't highlight strongs inside titles or chrome */
+  .slide.active h1 strong,
+  .slide.active h2 strong,
+  .slide.active h3 strong,
+  .slide.active .task-title strong,
+  .slide.active .pill strong,
+  .slide.active .label-pill strong,
+  .slide.active .pd-mark strong,
+  .slide.active .deal strong,
+  .slide.active .form-row strong,
+  .slide.active .email-card strong,
+  .slide.active .tl-row strong,
+  .slide.active .org-fields strong,
+  .slide.active .act-list strong,
+  .slide.active .setup-step h3 strong {
+    animation: none; background: transparent; padding: 0;
+  }
+
+  /* Mobile fallback - generous spacing, larger type */
   @media (max-width: 900px) {
-    .slide { padding: 8vh 5vw 11vh; }
-    .grid-2, .grid-3, .grid-4, .grid-5, .class-grid { grid-template-columns: 1fr; gap: 12px; }
-    .kanban { grid-template-columns: repeat(2, 1fr); }
-    .flow-steps { flex-direction: column; gap: 12px; padding: 14px; }
-    .fs-arrow { transform: rotate(90deg); padding: 4px 0; }
-    .before-after { grid-template-columns: 1fr; gap: 12px; }
+    .slide { padding: 9vh 6vw 13vh; overflow-y: auto; }
+    .slide-content { max-width: 100%; }
+    .grid-2, .grid-3, .grid-4, .grid-5, .class-grid { grid-template-columns: 1fr; gap: 14px; }
+    .kanban { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .flow-steps { flex-direction: column; gap: 14px; padding: 16px; }
+    .fs-arrow { transform: rotate(90deg); padding: 6px 0; }
+    .fs-detail { max-width: none; }
+    .before-after { grid-template-columns: 1fr; gap: 14px; }
     .ba-arrow { transform: rotate(90deg); margin: 0 auto; }
     .org-fields { grid-template-columns: 1fr; }
-    .hier-tier { min-width: 0; width: 100%; }
-    .top-brand { top: 14px; left: 14px; }
-    .top-brand .pd-mark { padding: 4px 9px; font-size: 11px; }
-    .lang-picker { top: 14px; right: 14px; }
-    .lang-toggle { padding: 4px 9px; font-size: 11px; }
-    .player { padding: 8px 12px; gap: 8px; }
-    .play-btn { width: 34px; height: 34px; }
-    .nav-btn { width: 28px; height: 28px; }
-    .menu-btn { padding: 5px 9px; font-size: 11px; }
+    .hier-tier { min-width: 0; width: 100%; padding: 14px 18px; }
+    .top-brand { top: 10px; left: 12px; }
+    .top-brand .pd-mark { padding: 4px 8px; font-size: 10px; }
+    .lang-picker { top: 10px; right: 12px; }
+    .lang-toggle { padding: 4px 8px; font-size: 10px; }
+    .player { padding: 10px 14px; gap: 10px; }
+    .play-btn { width: 36px; height: 36px; }
+    .nav-btn { width: 30px; height: 30px; }
+    .menu-btn { padding: 6px 10px; font-size: 11px; }
     .counter { font-size: 11px; min-width: 40px; }
-    h1 { font-size: clamp(30px, 8vw, 48px); }
-    h2 { font-size: clamp(24px, 6vw, 36px); }
-    .task-title { font-size: clamp(36px, 10vw, 56px); }
-    .lede, .task-sub { font-size: clamp(15px, 4vw, 18px); }
-    .big-num { font-size: clamp(80px, 20vw, 130px); }
+
+    /* Larger, less packed text */
+    h1 { font-size: clamp(34px, 8vw, 52px); line-height: 1.05; }
+    h2 { font-size: clamp(26px, 6.5vw, 40px); line-height: 1.12; }
+    h3 { font-size: 17px; line-height: 1.35; }
+    .task-title { font-size: clamp(40px, 11vw, 60px); line-height: 1.05; }
+    p { font-size: 16px; line-height: 1.6; }
+    .lede, .task-sub { font-size: clamp(16px, 4.2vw, 20px); line-height: 1.55; }
+    .big-num { font-size: clamp(80px, 22vw, 140px); }
+
+    /* More breathing room in cards / lists / tips */
+    .card { padding: 16px 18px; }
+    .card h3 { line-height: 1.3; margin-bottom: 6px; }
+    .card p { font-size: 15px; line-height: 1.55; }
+    .check { padding: 12px 0; font-size: 15px; line-height: 1.6; gap: 12px; }
+    .check .copy { line-height: 1.6; }
+    .tip-box { padding: 14px 18px; line-height: 1.6; gap: 14px; }
+    .tip-box .copy { font-size: 14px; line-height: 1.6; }
+    .day-block { padding: 14px 16px; gap: 14px; }
+    .day-block .body h3 { font-size: 16px; line-height: 1.3; margin-bottom: 4px; }
+    .day-block .body p { font-size: 14px; line-height: 1.55; }
+    .setup-step { padding: 14px 18px; gap: 16px; }
+    .setup-step .body h3 { font-size: 17px; line-height: 1.3; }
+    .setup-step .body p { font-size: 14px; line-height: 1.55; margin-top: 4px; }
+    .org-fields .row { padding: 11px 14px; }
+    .label-pill { padding: 11px 16px; font-size: 13px; gap: 8px; }
+    .check-item { padding: 14px 16px; font-size: 15px; gap: 14px; }
+
+    /* Activities list - drop the rightmost column */
+    .act-list .row { grid-template-columns: 18px 1fr 70px; gap: 8px; padding: 10px 12px; font-size: 11px; }
+    .act-list .row > div:nth-child(4) { display: none; }
+    .act-list .tabs { padding: 6px 12px; }
+    .act-list .head { padding: 8px 12px; font-size: 11px; }
+
+    /* Setup progress bar - center and stack */
+    .setup-progress { padding: 7px 12px; gap: 10px; font-size: 10px; flex-wrap: wrap; justify-content: center; }
+    .setup-progress .bar-track { width: 140px; }
+
+    /* Class cards */
+    .class-card { padding: 18px; }
+    .class-card .grade { width: 34px; height: 34px; font-size: 16px; top: 12px; right: 12px; }
+    .class-card h3 { font-size: 17px; }
+    .class-card .stat { font-size: 14px; }
+    .class-card .stat strong { font-size: 17px; }
+
+    /* Form mock - full width on mobile */
+    .form-mock { max-width: 100%; margin-left: 0; margin-right: 0; }
+
+    /* Calendar block */
+    .cal-block { padding: 14px; gap: 12px; }
+    .cal-block .cal-icon { width: 44px; height: 50px; }
+    .cal-block .body h3 { font-size: 15px; line-height: 1.3; }
+    .cal-block .body p { font-size: 13px; line-height: 1.5; }
+
+    /* Directo callout */
+    .directo-callout { padding: 14px 16px; }
+    .directo-header { gap: 8px; }
+    .directo-flow { padding: 10px; gap: 8px; }
+    .dflow-box { padding: 8px; }
+    .dflow-box .dflow-icon { font-size: 18px; }
+
+    /* Email mock */
+    .email-card { max-width: 100%; padding: 16px; }
+
+    /* Kanban deals */
+    .deal { padding: 10px 12px; font-size: 11px; }
+    .deal .ttl { font-size: 12px; line-height: 1.3; }
+
+    /* Setup step cards */
+    .step-card { padding: 16px; }
+    .step-card h3 { line-height: 1.3; }
+
+    /* Pills wrap */
+    .pill { white-space: normal; line-height: 1.3; }
+
+    /* Reason cards */
+    .reason { padding: 18px; }
+    .reason h3 { font-size: 17px; line-height: 1.3; }
+    .reason p { font-size: 14px; line-height: 1.55; }
   }
+
   @media (max-width: 600px) {
+    .slide { padding: 10vh 5vw 14vh; }
     .kanban { grid-template-columns: 1fr; }
     .menu .menu-grid { grid-template-columns: 1fr; }
-    .top-brand .pd-mark span.long { display: none; }
+    .top-brand .pd-mark { font-size: 9px; padding: 3px 7px; }
+    .lang-toggle span:not(.flag) { display: none; }
+    .lang-toggle { padding: 5px 8px; }
+    .player .nav-btn { display: none; }
+
+    h1 { font-size: clamp(30px, 9vw, 44px); }
+    .task-title { font-size: clamp(34px, 12vw, 52px); }
+    h2 { font-size: clamp(22px, 7vw, 32px); }
+
+    .grid-2, .grid-3, .grid-4 { gap: 12px; }
+
+    .day-block { flex-direction: column; gap: 8px; align-items: flex-start; }
+    .day-block .time { align-self: flex-start; }
+
+    .act-list .row { grid-template-columns: 14px 1fr 56px; padding: 9px 10px; font-size: 10.5px; gap: 6px; }
+    .act-list .when { font-size: 10px; }
+
+    .tl-row { flex-wrap: wrap; gap: 10px; }
+    .tl-row .verdict { margin-left: 0; }
+
+    .setup-dots .seg { width: 18px; }
+
+    .before-after { padding: 14px; }
+    .ba-card .ba-val { font-size: 14px; word-break: break-word; }
+
+    .label-pill { font-size: 12px; padding: 9px 13px; }
+    .label-pill .ex { font-size: 10px; }
   }
 
   /* Scrollbar */
